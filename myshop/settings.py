@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # custom
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,6 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 # the local path where these files live
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# this is the key to use for storing user session
+CART_SESSION_ID = 'cart'
