@@ -27,7 +27,13 @@
                     </td>
                     <td>{{ product.name }}</td>
                     <td>
-                        {{ item.quantity }}
+                        <!--This form allows to change the quantity of the selected products-->
+                        <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                            {{ item.update_quantity_form.quantity }}
+                            {{ item.update_quantity_form.override }}
+                            <input type="submit" value="Update">
+                            {% csrf_token %}
+                        </form>
                     </td>
                     <td>
                         <!--This form allows users to remove items from the cart-->
@@ -51,6 +57,6 @@
     <p class="text-right">
         <a href="{% url 'shop:product_list' %}" class="button light">Continue shopping</a>
         <!--users can navigate from cart detail page to the order form-->
-        <a href="{% url 'orders:order_create' %}" class="button">Checkout</a>
+        <a href="#" class="button">Checkout</a>
     </p>
 {% endblock %}
