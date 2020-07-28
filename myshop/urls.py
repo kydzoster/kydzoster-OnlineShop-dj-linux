@@ -21,6 +21,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # cart and orders has to be before the shop.urls, they are more restrictive than shop.urls
+    path('cart/', include('cart.urls', namespace='cart')),
     path('', include('shop.urls', namespace='shop')),
 ]
 # serving static files is only for development, this is not for production
