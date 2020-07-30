@@ -24,6 +24,7 @@ urlpatterns = [
     # cart and orders has to be before the shop.urls, they are more restrictive than shop.urls
     path('cart/', include('cart.urls', namespace='cart')),
     path('orders/', include('orders.urls', namespace='orders')),
+    path('payment/', include('payment.urls', namespace='payment')),
     path('', include('shop.urls', namespace='shop')),
 ]
 # serving static files is only for development, this is not for production
