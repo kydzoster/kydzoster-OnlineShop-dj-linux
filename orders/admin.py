@@ -2,6 +2,8 @@ import csv
 import datetime
 from django.http import HttpResponse
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
 from .models import Order, OrderItem
 
 # Register your models here.
@@ -34,10 +36,18 @@ def export_to_csv(modeladmin, request, queryset):
     return response
 export_to_csv.short_description = 'Export to CSV'
 
+# takes order object as an argument and returns an HTML link
+def order_detail(obj):
+    url = reverse('orders:admin_order_detail', args=[obj.id])
+    # use mark_safe to avoid auto escaping, 
+    # avoid using mark_safe on input that has come from the user to avoid XSS threats
+    return mark_safe(f'<a href="{url}">View</a>')
+
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'first_name', 'last_name', 'email', 'address', 'postal_code', 'city', 'paid', 'created', 'updated']
+    list_display = ['id', 'first_name', 'last_name', 'email', 'address', 'postal_code',
+                    'city', 'paid', 'created', 'updated', order_detail]
     list_filter = ['paid', 'created', 'updated']
     # inline allows to include a model on the same edit page as its related model
     inlines = [OrderItemInline]
